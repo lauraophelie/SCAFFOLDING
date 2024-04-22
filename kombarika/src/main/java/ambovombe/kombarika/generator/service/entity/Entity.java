@@ -21,8 +21,9 @@ public class Entity {
         String res = "";
         if(!this.getAnnotationProperty().getEntity().equals(""))
             res += this.getLanguageProperties().getAnnotationSyntax().replace("?", this.getAnnotationProperty().getEntity())  + "\n";
-        res +=  this.getLanguageProperties().getAnnotationSyntax().replace("?", this.getAnnotationProperty().getTable()).replace("?", table) + "\n"
-                + this.getLanguageProperties().getClassSyntax() + " "
+        if(!this.getAnnotationProperty().getTable().equals(""))
+        res +=  this.getLanguageProperties().getAnnotationSyntax().replace("?", this.getAnnotationProperty().getTable()).replace("?", table) + "\n";
+        res  += this.getLanguageProperties().getClassSyntax() + " "
                 + ObjectUtility.capitalize(ObjectUtility.formatToCamelCase(table));
         return res;
     }

@@ -141,10 +141,11 @@ public class View {
 
     public String getValues(HashMap<String, String> columns, HashMap<String, String> foreignKeys, String table){
         String res = "";
-        String template = this.getViewProperties().getValues();
+        String template = this.getViewProperties().getValuesPagination();
         res += template
             .replace("#entity#", table)
             .replace("#Entity#", ObjectUtility.capitalize(table)) + "\n";
+
         for (Map.Entry<String, String> set : columns.entrySet()) {
             String temp = foreignKeys.get(set.getKey());
             if(temp != null){
@@ -159,7 +160,7 @@ public class View {
 
     public String getFetcher(HashMap<String, String> columns, HashMap<String, String> foreignKeys, String table){
         String res = "";
-        String template = this.getViewProperties().getFetch();
+        String template = this.getViewProperties().getFetchPagination();
         res += template
             .replace("#entity#", table)
             .replace("#Entity#", ObjectUtility.capitalize(table));

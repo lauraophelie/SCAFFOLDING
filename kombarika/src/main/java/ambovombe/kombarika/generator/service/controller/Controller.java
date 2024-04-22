@@ -3,6 +3,7 @@ package ambovombe.kombarika.generator.service.controller;
 import ambovombe.kombarika.database.DbConnection;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import ambovombe.kombarika.configuration.mapping.*;
@@ -127,7 +128,30 @@ public class Controller{
             ) + "\n" + function);
     }
 
-    public String findById(String table) throws Exception{
+    public String findById(String table, HashMap<String, String> columns, HashMap<String, String> foreignKeys) throws Exception{
+        if(!this.getCrudMethod().getFindById().equals("")) {
+        String body = "";
+        String args = "";
+        args += this.getLanguageProperties().getAnnotationSyntax().replace("?", this.getControllerProperty().getAnnotationArgumentParameterFormData()) + " "
+                + ObjectUtility.capitalize(ObjectUtility.formatToCamelCase(table)) + " "
+                + ObjectUtility.formatToCamelCase(table);
+
+        body += Misc.tabulate(this.getCrudMethod().getFindById()
+                .replace("#object#", ObjectUtility.formatToCamelCase(table))
+                .replace("#between#", getIncludedTerms(columns, foreignKeys))
+                .replace("?", ObjectUtility.capitalize(ObjectUtility.formatToCamelCase(table))));
+
+        String function =  this.getLanguageProperties().getMethodSyntax()
+                .replace("#name#", "findById")
+                .replace("#type#", this.getControllerProperty().getReturnType().replace("?", this.getFrameworkProperties().getListSyntax().replace("?",ObjectUtility.capitalize(ObjectUtility.formatToCamelCase(table)))))
+                .replace("#arg#", args)
+                .replace("#body#", body);
+
+        return Misc.tabulate(this.getLanguageProperties().getAnnotationSyntax().replace("?",
+                this.getControllerProperty().getGet()
+                        .replace("?", ObjectUtility.formatToCamelCase(table))
+        ) + "\n" + function);
+        }
         String res = "";
         return res;
     }
@@ -137,6 +161,7 @@ public class Controller{
         HashMap<String, String> foreignKeys = DbService.getForeignKeys(this.getDbConnection(), table);
         String save = save(table);
         String findAll = findAll(table, columns, foreignKeys);
+        String findById = findById(table, columns, foreignKeys);
         String update = update(table);
         String delete = delete(table);
         stringBuilder.append(save);
@@ -146,6 +171,8 @@ public class Controller{
         stringBuilder.append(delete);
         stringBuilder.append("\n");
         stringBuilder.append(findAll);
+        /* stringBuilder.append("\n");
+        stringBuilder.append(findById);*/
         return stringBuilder.toString();
     }
 
@@ -154,9 +181,11 @@ public class Controller{
         if(!this.getControllerProperty().getField().equals("") && !this.getControllerProperty().getAnnotationField().equals("")){
             res += "\t"
                     + this.getLanguageProperties().getAnnotationSyntax().replace("?", this.getControllerProperty().getAnnotationField()) + "\n"
-                    + "\t" + this.getControllerProperty().getField().replace("?", ObjectUtility.capitalize(ObjectUtility.formatToCamelCase(table))) + "\n";
+                    + "\t" + this.getControllerProperty().getField().replace("?", ObjectUtility.capitalize(ObjectUtility.formatToCamelCase(table)))
+                    .replace("#object#", table) + "\n";
         }else if (!this.getControllerProperty().getField().equals("")){
-            res += "\t" + this.getControllerProperty().getField().replace("?", ObjectUtility.capitalize(ObjectUtility.formatToCamelCase(table))) + "\n";
+            res += "\t" + this.getControllerProperty().getField().replace("?", ObjectUtility.capitalize(ObjectUtility.formatToCamelCase(table)))
+                    .replace("#object#", table) + "\n";
         }
         return res;
     }
@@ -172,6 +201,7 @@ public class Controller{
             res += this.getLanguageProperties().getAnnotationSyntax()
                 .replace("?", this.getControllerProperty().getPath().replace("?", ObjectUtility.formatToCamelCase(table)));
         }
+        System.out.println(this.getLanguageProperties().getFrameworks().get(framework).getControllerProperty().getClassSyntax());
         res = res.replace("?", ObjectUtility.formatToCamelCase(table)) + "\n"
             + this.getLanguageProperties().getClassSyntax() + " "
             + ObjectUtility.capitalize(ObjectUtility.formatToCamelCase(
@@ -203,6 +233,8 @@ public class Controller{
     }
     
     public String generateController(String template, String table, String packageName, String repository, String entity, String framework) throws Exception {
+        List<String> primaryKeyColumn = DbService.getPrimaryKey(dbConnection, table);
+        String getterId = table + ".get"+ ObjectUtility.capitalize(ObjectUtility.formatToCamelCase(primaryKeyColumn.get(0))+"()");
         String res = template.replace("#package#", GeneratorService.getPackage(this.getLanguageProperties(), packageName))
                 .replace("#imports#", getControllerImport(repository, entity, table))
                 .replace("#class#", getControllerClass(table, framework))
@@ -211,7 +243,8 @@ public class Controller{
                 .replace("#fields#", getControllerField(table))
                 .replace("#constructors#", getConstructor(table))
                 .replace("#methods#", getCrudMethods(table))
-                .replace("#encapsulation#", "");
+                .replace("#encapsulation#", "")
+                .replace("#Id#",getterId);
         return res;
     }
 }

@@ -23,8 +23,10 @@ public class ViewProperties {
     String handleInputChange;
     String handleSelectChange;
     String values;
+    String valuesPagination;
     String tableValue;
     String fetch;
+    String fetchPagination;
     String extension;
     String handleSelectItem;
     HashMap<String, String> listMapping;

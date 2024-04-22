@@ -30,13 +30,13 @@ public class Test {
         // String viewPath = "/home/mamisoa/ITU/L3";
 
 
-        String framework = "csharp:dotnet";
-        String packageName = "com.district.test";
+        String framework = "java:spring-boot";
+        String packageName = "com.example.crud";
         String entity = "entity";
         String controller = "controller";
         String repository = "repository";
         String view = "";
-        String viewType = "react";
+        String viewType = "vue-ionic";
         String url = "http://localhost:8080/";
         try{
             // String[] tables = {"district","region"};
