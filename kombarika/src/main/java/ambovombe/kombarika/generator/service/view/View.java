@@ -141,7 +141,8 @@ public class View {
 
     public String getValues(HashMap<String, String> columns, HashMap<String, String> foreignKeys, String table){
         String res = "";
-        String template = this.getViewProperties().getValuesPagination();
+        //String template = this.getViewProperties().getValuesPagination();
+        String template = this.getViewProperties().getValues();
         res += template
             .replace("#entity#", table)
             .replace("#Entity#", ObjectUtility.capitalize(table)) + "\n";
@@ -160,7 +161,8 @@ public class View {
 
     public String getFetcher(HashMap<String, String> columns, HashMap<String, String> foreignKeys, String table){
         String res = "";
-        String template = this.getViewProperties().getFetchPagination();
+        //String template = this.getViewProperties().getFetchPagination();
+        String template = this.getViewProperties().getFetch();
         res += template
             .replace("#entity#", table)
             .replace("#Entity#", ObjectUtility.capitalize(table));
@@ -244,6 +246,12 @@ public class View {
         String id = idAndAttribute.get("id");
         System.out.println(path);
         String attribute = idAndAttribute.get("attribute");
+
+        String getUrl = this.getFrameworkProperties().getControllerProperty().getGetUrl();
+        String postUrl = this.getFrameworkProperties().getControllerProperty().getPostUrl();
+        String putUrl = this.getFrameworkProperties().getControllerProperty().getPutUrl();
+        String deleteUrl = this.getFrameworkProperties().getControllerProperty().getDeleteUrl();
+
         res = template.replace("#header#", getHeaders( columns))
         .replace("#inputInsert#", getInputInsert(columns, foreignKeys, primaryKeys, url, id, attribute))
         .replace("#inputUpdate#", getInputUpdate(columns, foreignKeys, primaryKeys, url, id))
@@ -254,6 +262,10 @@ public class View {
         .replace("#entity#", ObjectUtility.formatToSpacedString(table))
         .replace("#tableValue#", getTableValue(columns, foreignKeys, attribute))
         .replace("#url#", url)
+        .replace("#getUrl#", getUrl)
+        .replace("#postUrl#", postUrl)
+        .replace("#putUrl#", putUrl)
+        .replace("#deleteUrl#", deleteUrl)
         .replace("#id#", ObjectUtility.formatToCamelCase(primaryKeys.get(0)))
         .replace("#path#", path)
         .replace("#label#", ObjectUtility.formatToCamelCase(primaryKeys.get(0)));

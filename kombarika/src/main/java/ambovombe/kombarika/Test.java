@@ -30,14 +30,14 @@ public class Test {
         // String viewPath = "/home/mamisoa/ITU/L3";
 
 
-        String framework = "java:spring-boot";
-        String packageName = "com.example.crud";
+        String framework = "java:java-framework";
+        String packageName = "emp.example.crud";
         String entity = "entity";
         String controller = "controller";
         String repository = "repository";
         String view = "";
         String viewType = "vue-ionic";
-        String url = "http://localhost:8080/";
+        String url = "http://localhost:8080/test_back/";
         try{
             // String[] tables = {"district","region"};
             // DbConnection dbConnection = codeGenerator.getDbConnection();

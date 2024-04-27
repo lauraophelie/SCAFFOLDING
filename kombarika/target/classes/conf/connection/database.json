@@ -2,13 +2,13 @@
     "defaultConnection" : "DefaultConnection",
     "listConnection": {
         "DefaultConnection": {
-            "datasource":"jdbc:postgresql://localhost:5432/video_games",
+            "datasource":"jdbc:postgresql://localhost:5432/emp",
             "username":"postgres",
             "password":"pg",
             "databaseType":"POSTGRESQL"
         },
         "OtherConnection": {
-            "datasource":"jdbc:postgresql://localhost:5432/video_games",
+            "datasource":"jdbc:postgresql://localhost:5432/emp",
             "username":"postgres",
             "password":"pg",
             "databaseType":"POSTGRESQL"

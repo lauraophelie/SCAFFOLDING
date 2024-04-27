@@ -42,14 +42,6 @@
             </ion-row>
         </ion-grid>
 
-        <!------ pagination ------------>
-        <ion-button v-if="currentPage > 1" @click="loadPreviousPage" size="default" color="light">
-            Précédent
-        </ion-button>
-        <ion-button v-if="currentPage < totalPages" @click="loadNextPage" size="default" color="medium">
-            Suivant
-        </ion-button>
-
         <ion-modal :is-open="isOpen">
             <ion-header>
                 <ion-toolbar>
@@ -114,6 +106,10 @@
 
 /// url back end 
     const url = '#url#';
+    const getUrl = '/#getUrl#';
+    const postUrl = '/#postUrl#';
+    const putUrl = '/#putUrl#';
+    const deleteUrl = '/#deleteUrl#';
 
     #values#
     #getValues#
@@ -136,21 +132,21 @@
         const data = {};
     
         for (let [key, value] of formData.entries()) {
-            const element = form.elements[key];
-            if(element.tagName === 'ION-SELECT') {
-                const isMultiple = element.hasAttribute('multiple');
-                if(isMultiple) {
-                    data[key] = Array.from(value);
-                } else {
-                    data[key] = value;
+            if(key.includes("-select")) {
+                const k = key.split("-select");
+
+                data[k[0]] = {
+                    id: /^\d+$/.test(value) ? parseInt(value, 10) : value
                 }
+                delete data[key];
             } else {
-                data[key] = value;
+                data[key] = /^\d+$/.test(value) ? parseInt(value, 10) : value;
             }
         }
+        console.log(data);
 
         try {
-            const response = await fetch(url + '#path#', {
+            const response = await fetch(url + '#path#' + postUrl, {
             method: 'POST',
             body: JSON.stringify(data),
             headers: {
@@ -176,21 +172,21 @@
         const data = {};
     
         for (let [key, value] of formData.entries()) {
-            const element = form.elements[key];
-            if(element.tagName === 'ION-SELECT') {
-                const isMultiple = element.hasAttribute('multiple');
-                if(isMultiple) {
-                    data[key] = Array.from(value);
-                } else {
-                    data[key] = value;
+            if(key.includes("-select")) {
+                const k = key.split("-select");
+
+                data[k[0]] = {
+                    id: /^\d+$/.test(value) ? parseInt(value, 10) : value
                 }
+                delete data[key];
             } else {
-                data[key] = value;
+                data[key] = /^\d+$/.test(value) ? parseInt(value, 10) : value;
             }
         }
+        console.log(data);
 
         try {
-            const response = await fetch(url + '#path#', {
+            const response = await fetch(url + '#path#' + putUrl, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
@@ -211,7 +207,7 @@
     const handleDeleteSubmit = async (item) => {
         try {
             console.log(item);
-            const response = await fetch(url + '#path#', {
+            const response = await fetch(url + '#path#' + deleteUrl, {
                 method: 'DELETE',
                 headers: {
                 'Content-Type': 'application/json',

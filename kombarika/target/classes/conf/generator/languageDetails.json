@@ -78,7 +78,11 @@
                         "annotationMethodParameter":"",
                         "annotationArgumentParameterFormData":"FromBody",
                         "annotationArgumentParameterLink":"",
-                        "constructor": "\tpublic #name#Controller(#name#DbContext context) { _context = context; }"
+                        "constructor": "\tpublic #name#Controller(#name#DbContext context) { _context = context; }",
+                        "getUrl": "",
+                        "postUrl": "",
+                        "putUrl": "",
+                        "deleteUrl": ""
                     },
                     "repositoryProperty" : {
                         "name":"DbContext",
@@ -167,7 +171,11 @@
                         "annotationMethodParameter":"",
                         "annotationArgumentParameterFormData":"RequestBody",
                         "annotationArgumentParameterLink":"PathVariable",
-                        "constructor": ""
+                        "constructor": "",
+                        "getUrl": "",
+                        "postUrl": "",
+                        "putUrl": "",
+                        "deleteUrl": ""
                     },
                     "repositoryProperty" : {
                         "name":"Repository",
@@ -238,7 +246,11 @@
                         "annotationMethodParameter":"",
                         "annotationArgumentParameterFormData":"Argument",
                         "annotationArgumentParameterLink":"",
-                        "constructor":""
+                        "constructor":"",
+                        "getUrl": "",
+                        "postUrl": "",
+                        "putUrl": "",
+                        "deleteUrl": ""
                     },
                     "repositoryProperty" : {
                         "name":"",
@@ -310,7 +322,11 @@
                         "annotationMethodParameter":"",
                         "annotationArgumentParameterFormData":"RequestBody",
                         "annotationArgumentParameterLink":"",
-                        "constructor":""
+                        "constructor":"",
+                        "getUrl": "",
+                        "postUrl": "",
+                        "putUrl": "",
+                        "deleteUrl": ""
                     },
                     "repositoryProperty" : {
                         "name":"",
@@ -340,7 +356,7 @@
                     },
                     "annotationProperty" : {
                         "table": "Table(\"?\")",
-                        "autoIncrement":"",
+                        "autoIncrement":"GenerationAUTO",
                         "column": "Column(\"?\")",
                         "entity": "",
                         "controller": "MVCController",
@@ -379,7 +395,11 @@
                         "annotationMethodParameter":"",
                         "annotationArgumentParameterFormData":"Param",
                         "annotationArgumentParameterLink":"",
-                        "constructor": ""
+                        "constructor": "",
+                        "getUrl": "find.do",
+                        "postUrl": "new.do",
+                        "putUrl": "update.do",
+                        "deleteUrl": "delete.do"
                     },
                     "repositoryProperty" : {
                         "name":"",

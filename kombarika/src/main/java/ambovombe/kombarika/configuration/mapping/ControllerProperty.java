@@ -22,4 +22,8 @@ public class ControllerProperty {
     String annotationArgumentParameterFormData;
     String annotationArgumentParameterLink;
     String constructor;
+    String getUrl;
+    String postUrl;
+    String putUrl;
+    String deleteUrl;
 }
